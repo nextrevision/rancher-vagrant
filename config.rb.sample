@@ -1,0 +1,18 @@
+# Tag of the rancher/server image to run
+# $rancher_version = 'latest'
+
+# Boxes to run in the vagrant environment
+$boxes = [
+    {
+      "name" => "rancher-server",
+      "count" => 1,
+      "memory" => "1536",
+      "labels" => []
+    },
+    {
+      "name" => "rancher-general",
+      "count" => 1,
+      "memory" => "512",
+      "labels" => ["general"]
+    },
+]

@@ -1,0 +1,5 @@
+*.box
+.vagrant
+*.swp
+.vagrant_plugin_check
+config.rb
