@@ -10,6 +10,8 @@ cd rancher-vagrant-env
 vagrant up
 ```
 
+Assuming the defaults, browse to [http://192.168.33.11:8080](http://192.168.33.11:8080) to access your Rancher server.
+
 ## Configuration
 
 You can configure the environment by setting up a custom `config.rb` file in the root of the repository. The available configuration options to you are displayed below:
@@ -23,9 +25,9 @@ You can configure the environment by setting up a custom `config.rb` file in the
 ** `labels` (optional, *array*) - labels to apply to the host when registering in 'key=value' format
 ** `ip` (optional, *string*) - ip to set for the box (typically good to leave this alone)
 
-* `ip_prefix` - the first three octets of the IP to use when configuring boxes
-* `version` - Rancher server version (Docker tag) to deploy
+* `ip_prefix` (optional, *string*) - the first three octets of the IP to use when configuring boxes
+* `version` (optional, *string*) - Rancher server version (Docker tag) to deploy
 
 ## Example
 
-See config.rb.sample
+See config_sample.rb
