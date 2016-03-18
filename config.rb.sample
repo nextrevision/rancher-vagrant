@@ -1,18 +1,21 @@
 # Tag of the rancher/server image to run
-# $rancher_version = 'latest'
+# $version = 'latest'
+
+# IP prefix to use
+# $ip_prefix = '192.168.33'
 
 # Boxes to run in the vagrant environment
 $boxes = [
     {
       "name" => "rancher-server",
-      "count" => 1,
+      "server" => true,
       "memory" => "1536",
-      "labels" => []
+      "labels" => [],
     },
     {
       "name" => "rancher-general",
-      "count" => 1,
+      "count" => 2,
       "memory" => "512",
-      "labels" => ["general"]
+      "labels" => ["type=general"]
     },
 ]

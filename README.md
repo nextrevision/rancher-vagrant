@@ -1,2 +1,31 @@
-# rancher-vagrant
-Vagrant environment for running Rancher server and RancherOS
+# rancheros-vagrant
+
+Vagrant environment for running Rancher server and RancherOS.
+
+## Usage
+
+```
+git clone https://github.com/nextrevision/rancher-vagrant-env
+cd rancher-vagrant-env
+vagrant up
+```
+
+## Configuration
+
+You can configure the environment by setting up a custom `config.rb` file in the root of the repository. The available configuration options to you are displayed below:
+
+* `boxes` - an array of guests to boot up in the environment
+
+** `name` (**required**, *string*) - name of the box
+** `count` (optional, *int*) - number of boxes to create based on these settings
+** `server` (optional, *bool*) - set to true of the box should be configured as a Rancher server
+** `memory` (optional, *string*) - amount of memory to dedicate to the box (if running as a Rancher server, it's best to set this to a higher value, maybe '1536')
+** `labels` (optional, *array*) - labels to apply to the host when registering in 'key=value' format
+** `ip` (optional, *string*) - ip to set for the box (typically good to leave this alone)
+
+* `ip_prefix` - the first three octets of the IP to use when configuring boxes
+* `version` - Rancher server version (Docker tag) to deploy
+
+## Example
+
+See config.rb.sample
