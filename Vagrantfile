@@ -18,6 +18,15 @@ def validate_boxes(boxes)
   return servers + agents
 end
 
+def get_server_ip(boxes)
+  boxes.each_with_index do |box, i|
+    if box.keys.include?('server') and box['server']
+      return box['ip'] ? box['ip'] : "#{$ip_prefix}.#{i+1}#{i+1}"
+    end
+  end
+  return nil
+end
+
 # install vagrant plugins
 if not File.exist?('.vagrant_plugin_check')
   puts "Checking and installing vagrant plugins"
@@ -36,12 +45,12 @@ end
 $boxes = []
 $version = 'latest'
 $ip_prefix = '192.168.33'
-$server_ip = nil
 if File.exist?(CONFIG)
     require CONFIG
 end
 
 $sorted_boxes = validate_boxes $boxes
+$server_ip = get_server_ip $sorted_boxes
 
 Vagrant.configure(2) do |config|
   config.vm.box   = "rancherio/rancheros"
@@ -51,6 +60,8 @@ Vagrant.configure(2) do |config|
   $sorted_boxes.each_with_index do |box, box_index|
     count = box['count'] || 1
     server = box['server'] || false
+    project = box['project'] || nil
+    project_type = box['project_type'] || nil
     (1..count).each do |i|
       hostname = "#{box['name']}-%02d" % i
       config.vm.define hostname do |node|
@@ -72,6 +83,8 @@ Vagrant.configure(2) do |config|
             rancher.version = $version
             rancher.deactivate = true
             rancher.labels = box['labels'] || []
+            rancher.project = project if project
+            rancher.project_type = project_type if project_type
           end
         else
           node.vm.provision :rancher do |rancher|
@@ -79,6 +92,8 @@ Vagrant.configure(2) do |config|
             rancher.hostname = $server_ip
             rancher.version = $version
             rancher.labels = box['labels'] || []
+            rancher.project = project if project
+            rancher.project_type = project_type if project_type
           end
         end
       end

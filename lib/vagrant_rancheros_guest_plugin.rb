@@ -63,8 +63,11 @@ module VagrantPlugins
                 def self.change_host_name(machine, name)
                     machine.communicate.tap do |comm|
                         if !comm.test("sudo hostname --fqdn | grep '#{name}'")
-                            comm.sudo("hostname #{name.split('.')[0]}")
-                            comm.sudo("echo '#{name.split('.')[0]}' > /etc/hostname")
+                            comm.sudo("echo '#cloud-config' > /var/lib/rancher/conf/cloud-config.yml")
+                            comm.sudo("echo 'hostname: #{name}' >> /var/lib/rancher/conf/cloud-config.yml")
+                            comm.sudo("ros config set cloud_init.datasources '[file:/var/lib/rancher/conf/cloud-config.yml]'")
+                            comm.sudo("system-docker restart cloud-init")
+                            comm.sudo("cloud-init -execute")
                         end
                     end
                 end
