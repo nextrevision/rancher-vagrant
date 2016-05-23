@@ -4,6 +4,12 @@
 # required for setting the guest capabilities
 require_relative 'lib/vagrant_rancheros_guest_plugin.rb'
 
+unless Vagrant.has_plugin?("vagrant-rancher")
+  puts "vagrant-rancher plugin not found, installing..."
+  `vagrant plugin install vagrant-rancher`
+  abort "vagrant-rancher plugin installed, but you need to rerun the vagrant command"
+end
+
 def validate_boxes(boxes)
   servers = []
   agents = []
@@ -25,13 +31,6 @@ def get_server_ip(boxes)
     end
   end
   return nil
-end
-
-# install vagrant plugins
-if not File.exist?('.vagrant_plugin_check')
-  puts "Checking and installing vagrant plugins"
-  `vagrant plugin list | grep vagrant-rancher || vagrant plugin install vagrant-rancher`
-  File.open(".vagrant_plugin_check", "w") {}
 end
 
 # load user config
