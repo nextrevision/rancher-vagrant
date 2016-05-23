@@ -81,6 +81,7 @@ Vagrant.configure(2) do |config|
             rancher.hostname = $server_ip
             rancher.version = $version
             rancher.deactivate = true
+            rancher.install_agent = box['install_agent'] || false
             rancher.labels = box['labels'] || []
             rancher.project = project if project
             rancher.project_type = project_type if project_type
@@ -90,6 +91,7 @@ Vagrant.configure(2) do |config|
             rancher.role = "agent"
             rancher.hostname = $server_ip
             rancher.version = $version
+            rancher.install_agent = box['install_agent'].nil? ? true : box['install_agent']
             rancher.labels = box['labels'] || []
             rancher.project = project if project
             rancher.project_type = project_type if project_type
