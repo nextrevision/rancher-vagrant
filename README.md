@@ -23,6 +23,7 @@ You can configure the environment by setting up a custom `config.rb` file in the
     - `memory` (optional, *string*) - amount of memory to dedicate to the box (if running as a Rancher server, it's best to set this to a higher value, maybe '1536')
     - `labels` (optional, *array*) - labels to apply to the host when registering in 'key=value' format
     - `ip` (optional, *string*) - ip to set for the box (typically good to leave this alone)
+    - `install_agent` (optional, *bool*) - install rancher-agent on the guest (default: false if 'server' role, true for 'agent' role)
     - `project` (optional, *string*) - name of the project to place the guest in (will be created if it doesn't exist)
     - `project_type` (optional, *string*) - type of project to create (default: cattle; can be kubernetes or swarm)
 
