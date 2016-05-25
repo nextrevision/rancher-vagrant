@@ -42,4 +42,4 @@ You can configure the environment by setting up a custom `config.rb` file in the
 
 ## Example
 
-See config_sample.rb
+See [config_sample.rb](config_sample.rb)
