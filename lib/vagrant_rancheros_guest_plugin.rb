@@ -35,17 +35,16 @@ module VagrantPlugins
                         end
 
                         networks.each do |network|
-                            dhcp = "true"
                             iface = interfaces[network[:interface].to_i - 1]
 
                             if network[:type] == :static
-                                cidr = IPAddr.new(network[:netmask]).to_cidr
-                                comm.sudo("ros config set rancher.network.interfaces.#{iface}.address #{network[:ip]}/#{cidr}")
-                                comm.sudo("ros config set rancher.network.interfaces.#{iface}.match #{iface}")
-
-                                dhcp = "false"
+                              cidr = IPAddr.new(network[:netmask]).to_cidr
+                              comm.sudo("ros config set rancher.network.interfaces.#{iface}.address #{network[:ip]}/#{cidr}")
+                              comm.sudo("ros config set rancher.network.interfaces.#{iface}.match #{iface}")
+                              comm.sudo("ros config set rancher.network.interfaces.#{iface}.dhcp false")
+                            else
+                              comm.sudo("ros config set rancher.network.interfaces.#{iface}.dhcp true")
                             end
-                            comm.sudo("ros config set rancher.network.interfaces.#{iface}.dhcp #{dhcp}")
                         end
 
                         comm.sudo("system-docker restart network")
