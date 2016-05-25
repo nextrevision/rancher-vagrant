@@ -1,12 +1,12 @@
-# rancheros-vagrant
+# rancher-vagrant
 
-Vagrant environment for running Rancher server and RancherOS.
+Extensible and automated local Rancher environments using Vagrant
 
 ## Usage
 
 ```
-git clone https://github.com/nextrevision/rancher-vagrant-env
-cd rancher-vagrant-env
+git clone https://github.com/nextrevision/rancher-vagrant
+cd rancher-vagrant
 vagrant up
 ```
 
@@ -16,19 +16,29 @@ Assuming the defaults, browse to [http://192.168.33.11:8080](http://192.168.33.1
 
 You can configure the environment by setting up a custom `config.rb` file in the root of the repository. The available configuration options to you are displayed below:
 
-- `boxes` - an array of guests to boot up in the environment
-    - `name` (**required**, *string*) - name of the box
-    - `count` (optional, *int*) - number of boxes to create based on these settings
-    - `server` (optional, *bool*) - set to true of the box should be configured as a Rancher server
-    - `memory` (optional, *string*) - amount of memory to dedicate to the box (if running as a Rancher server, it's best to set this to a higher value, maybe '1536')
-    - `labels` (optional, *array*) - labels to apply to the host when registering in 'key=value' format
-    - `ip` (optional, *string*) - ip to set for the box (typically good to leave this alone)
-    - `install_agent` (optional, *bool*) - install rancher-agent on the guest (default: false if 'server' role, true for 'agent' role)
-    - `project` (optional, *string*) - name of the project to place the guest in (will be created if it doesn't exist)
-    - `project_type` (optional, *string*) - type of project to create (default: cattle; can be kubernetes or swarm)
+| Item                   | Type     | Required | Default             | Description                                                              |
+|------------------------|----------|----------|---------------------|--------------------------------------------------------------------------|
+| `$box`                 | *string* | false    | rancherio/rancheros | Vagrant box to use for the environment                                   |
+| `$box_url`             | *string* | false    | `nil`               | URL to download the box                                                  |
+| `$box_version`         | *string* | false    | `nil`               | Version of the box to download                                           |
+| `$disable_folder_sync` | *bool*   | false    | `true`              | Disable syncing the current working directory to "/vagrant" on the guest |
+| `$ip_prefix`           | *string* | false    | 192.168.33          | Prefix for all IPs assigned to the guests                                |
+| `$rancher_version`     | *string* | false    | latest              | Version of Rancher to deploy                                             |
+| `$boxes`               | *array*  | true     | `[]`                | List of boxes (see [Boxes](#boxes) table below)                                  |
 
-- `ip_prefix` (optional, *string*) - the first three octets of the IP to use when configuring boxes
-- `version` (optional, *string*) - Rancher server version (Docker tag) to deploy
+### Boxes
+
+| Item            | Type     | Required | Default                                        | Description                                                                           |
+|-----------------|----------|----------|------------------------------------------------|---------------------------------------------------------------------------------------|
+| `name`          | *string* | true     |                                                | Base name of the box                                                                  |
+| `count`         | *string* | false    | 1                                              | Number of guests to create with this config                                           |
+| `role`          | *string* | false    | agent                                          | Role of the box (either "server" or "agent", at least one "server" must be specified) |
+| `memory`        | *string* | false    | 512                                            | Amount of memory to dedicate to the box (for RancherOS, at least 512 is recommended)  |
+| `ip`            | *string* | false    | <computed>                                     | IP address to assign to the box (typically best to leave this alone)                  |
+| `install_agent` | *bool*   | false    | `true` if role==agent, `false` if role==server | Whether or not to run the Rancher agent on the guest                                  |
+| `project`       | *string* | false    | `nil`                                          | Name of the Rancher project or environment to place the box in                        |
+| `project_type`  | *string* | false    | cattle                                         | Type of project to for the Rancher environment (cattle, swarm, kubernetes)            |
+| `server`        | *string* | false    | <computed>                                     | Hostname or IP address of the Rancher server to join                                  |
 
 ## Example
 

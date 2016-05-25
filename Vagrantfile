@@ -23,6 +23,7 @@ def parse_boxes(boxes)
   servers = []
   agents = []
   boxes.each do |box|
+    abort 'Must specify name for box' if box['name'].nil?
     if $box == 'rancherio/rancheros'
       if !box['memory'].nil? and box['memory'].to_i < 512
         puts 'WARNING: Running RancherOS on less than 512MB of RAM has been known to cause issues.'
