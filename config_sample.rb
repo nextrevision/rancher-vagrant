@@ -1,13 +1,11 @@
 # Box configuration details
 # $box = "rancherio/rancheros"
 # $box_version = '>=0.4.1'
-#
-# Official CoreOS channel to download from.  Either alpha, beta or stable
-#$update_channel = "alpha"
-# Change the version of CoreOS to deploy.  Use "current" if unsure
-#$image_version = "current"
+
+# Official CoreOS channel. Either alpha, beta or stable
+# $update_channel = "alpha"
 # URL to pull CoreOS image from
-#$box_url = "https://storage.googleapis.com/%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % [$update_channel, $image_version]
+# $box_url = "https://storage.googleapis.com/%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % [$update_channel]
 
 # Tag of the rancher/server image to run
 # $rancher_version = 'latest'
