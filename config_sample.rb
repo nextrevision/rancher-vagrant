@@ -21,13 +21,13 @@ $boxes = [
     {
       "name"   => "rancher-server",
       "role"   => "server",
-      "memory" => "1024",
+      "memory" => "1536",
       "labels" => [],
     },
     {
       "name"   => "rancher-agent",
-      "count"  => 1,
+      "count"  => 2,
       "memory" => "512",
-      "labels" => ["type=rancher-client"]
+      "labels" => ["type=general"]
     },
 ]
