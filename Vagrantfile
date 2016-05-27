@@ -86,8 +86,11 @@ Vagrant.configure(2) do |config|
       config.vm.box_url = $box_url unless $box_url.nil?
       config.vm.box_version = $box_version unless $box_version.nil?
   else
-      # Default to RancherOS if nothing else gets overriden
+      # Default to RancherOS if nothing gets overriden
       config.vm.box = $box
+      config.vm.box_url = $box_url unless $box_url.nil?
+      config.vm.box_version = $box_version unless $box_version.nil?
+
   end
 
   if $disable_folder_sync
