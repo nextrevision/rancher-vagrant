@@ -80,10 +80,18 @@ $sorted_boxes = parse_boxes $boxes
 $default_server_ip = get_server_ip $sorted_boxes
 
 Vagrant.configure(2) do |config|
-  # configure box settings
-  config.vm.box = $box
-  config.vm.box_url = $box_url unless $box_url.nil?
-  config.vm.box_version = $box_version unless $box_version.nil?
+  # Try to use a custom CoreOS box
+  if $update_channel != nil
+      config.vm.box = "coreos-%s" % $update_channel
+      config.vm.box_url = $box_url unless $box_url.nil?
+      config.vm.box_version = $box_version unless $box_version.nil?
+  else
+      # Default to RancherOS if nothing gets overriden
+      config.vm.box = $box
+      config.vm.box_url = $box_url unless $box_url.nil?
+      config.vm.box_version = $box_version unless $box_version.nil?
+
+  end
 
   if $disable_folder_sync
     config.vm.synced_folder '.', '/vagrant', disabled: true
